@@ -9,7 +9,7 @@ import java.util.Objects;
  * Support ticket domain entity for tracking user problems and support answers.
  */
 public class Ticket {
-    private final String id;
+    private final String ticketId;
     private final String userPhoneNumber;
     private final TicketSection section;
     private final String text;
@@ -17,9 +17,9 @@ public class Ticket {
     private TicketStatus status;
     private String supportReply;
 
-    public Ticket(String id, String userPhoneNumber, TicketSection section,
+    public Ticket(String ticketId, String userPhoneNumber, TicketSection section,
                   String text, Instant createdAt) {
-        if (id == null || id.isBlank()) {
+        if (ticketId == null || ticketId.isBlank()) {
             throw new ValidationException("Ticket ID cannot be empty.");
         }
         if (userPhoneNumber == null || userPhoneNumber.isBlank()) {
@@ -28,7 +28,7 @@ public class Ticket {
         if (text == null || text.trim().isEmpty()) {
             throw new ValidationException("Ticket text cannot be empty.");
         }
-        this.id = id.trim();
+        this.ticketId = ticketId.trim();
         this.userPhoneNumber = userPhoneNumber.trim();
         this.section = Objects.requireNonNull(section, "Ticket section cannot be null.");
         this.text = text.trim();
@@ -37,8 +37,8 @@ public class Ticket {
         this.supportReply = "";
     }
 
-    public String getId() {
-        return id;
+    public String getTicketId() {
+        return ticketId;
     }
 
     public String getUserPhoneNumber() {

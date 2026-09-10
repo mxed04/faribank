@@ -17,7 +17,7 @@ public class Customer extends User {
     private KycStatus kycStatus;
     private String rejectionReason;
     private Account account;
-    private boolean contactsFeatureEnabled;
+    private boolean contactsEnabled;
     private final List<String> recentAccounts;
 
     public Customer(String firstName, String lastName, String phoneNumber,
@@ -33,7 +33,7 @@ public class Customer extends User {
         setNationalCode(nationalCode);
         this.kycStatus = KycStatus.PENDING;
         this.rejectionReason = "";
-        this.contactsFeatureEnabled = true;
+        this.contactsEnabled = true;
         this.recentAccounts = new ArrayList<>();
     }
 
@@ -76,24 +76,24 @@ public class Customer extends User {
         this.account = account;
     }
 
-    public boolean isContactsFeatureEnabled() {
-        return contactsFeatureEnabled;
+    public boolean isContactsEnabled() {
+        return contactsEnabled;
     }
 
-    public void setContactsFeatureEnabled(boolean contactsFeatureEnabled) {
-        this.contactsFeatureEnabled = contactsFeatureEnabled;
+    public void setContactsEnabled(boolean enabled) {
+        this.contactsEnabled = enabled;
     }
 
     public List<String> getRecentAccounts() {
         return Collections.unmodifiableList(recentAccounts);
     }
 
-    public void addRecentAccount(String targetAccountNumber) {
-        if (targetAccountNumber == null || targetAccountNumber.isBlank()) {
+    public void addRecentAccount(String targetAccount) {
+        if (targetAccount == null || targetAccount.isBlank()) {
             return;
         }
-        recentAccounts.remove(targetAccountNumber);
-        recentAccounts.add(0, targetAccountNumber);
+        recentAccounts.remove(targetAccount);
+        recentAccounts.add(0, targetAccount);
         if (recentAccounts.size() > 10) {
             recentAccounts.remove(recentAccounts.size() - 1);
         }

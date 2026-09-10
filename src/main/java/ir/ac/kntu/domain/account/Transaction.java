@@ -11,21 +11,21 @@ public class Transaction implements Comparable<Transaction> {
     private final TransactionType type;
     private final double amount;
     private final double fee;
-    private final String sourceAccountNumber;
-    private final String destinationAccountNumber;
-    private final String destinationOwnerDisplayName;
+    private final String sourceAccount;
+    private final String destAccount;
+    private final String destOwnerName;
     private final Instant timestamp;
 
     public Transaction(String trackingNumber, TransactionType type, double amount,
-                       double fee, String sourceAccountNumber, String destinationAccountNumber,
-                       String destinationOwnerDisplayName, Instant timestamp) {
+                       double fee, String sourceAccount, String destAccount,
+                       String destOwnerName, Instant timestamp) {
         this.trackingNumber = Objects.requireNonNull(trackingNumber, "Tracking number is mandatory");
         this.type = Objects.requireNonNull(type, "Transaction type is mandatory");
         this.amount = amount;
         this.fee = fee;
-        this.sourceAccountNumber = sourceAccountNumber;
-        this.destinationAccountNumber = destinationAccountNumber;
-        this.destinationOwnerDisplayName = destinationOwnerDisplayName;
+        this.sourceAccount = sourceAccount;
+        this.destAccount = destAccount;
+        this.destOwnerName = destOwnerName;
         this.timestamp = Objects.requireNonNull(timestamp, "Timestamp is mandatory");
     }
 
@@ -49,16 +49,16 @@ public class Transaction implements Comparable<Transaction> {
         return amount + fee;
     }
 
-    public String getSourceAccountNumber() {
-        return sourceAccountNumber;
+    public String getSourceAccount() {
+        return sourceAccount;
     }
 
-    public String getDestinationAccountNumber() {
-        return destinationAccountNumber;
+    public String getDestAccount() {
+        return destAccount;
     }
 
-    public String getDestinationOwnerDisplayName() {
-        return destinationOwnerDisplayName;
+    public String getDestOwnerName() {
+        return destOwnerName;
     }
 
     public Instant getTimestamp() {
@@ -67,7 +67,6 @@ public class Transaction implements Comparable<Transaction> {
 
     @Override
     public int compareTo(Transaction other) {
-        // Sort descending by timestamp as specified in requirements
         return other.timestamp.compareTo(this.timestamp);
     }
 

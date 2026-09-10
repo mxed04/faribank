@@ -36,7 +36,7 @@ class DomainModelTest {
         Customer customer = new Customer("Fariborz", "Danayi", "09123456789", "0123456789", "Fariborz@2024");
         assertEquals("Fariborz Danayi", customer.getFullName());
         assertEquals(KycStatus.PENDING, customer.getKycStatus());
-        assertTrue(customer.isContactsFeatureEnabled());
+        assertTrue(customer.isContactsEnabled());
 
         customer.setKycStatus(KycStatus.APPROVED);
         assertEquals(KycStatus.APPROVED, customer.getKycStatus());
@@ -73,14 +73,12 @@ class DomainModelTest {
         account.charge(1000.0, tx1);
         assertEquals(1000.0, account.getBalance());
 
-        // Explicitly set t2 after t1 to avoid zero-millisecond race condition in tests
         Instant t2 = t1.plusSeconds(60);
         Transaction tx2 = new Transaction("TX2", TransactionType.TRANSFER, 200.0, 1.0,
                 account.getAccountNumber(), "AC8888", "Receiver", t2);
         account.debit(201.0, tx2);
         assertEquals(799.0, account.getBalance());
 
-        // Verify descending order comparison
         assertTrue(tx2.compareTo(tx1) < 0);
         assertTrue(tx1.compareTo(tx2) > 0);
     }
